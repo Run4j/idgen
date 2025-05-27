@@ -51,18 +51,18 @@ public class IdGenerator {
         return Response.ok(incrementAndGet()).build();
     }
 
-    public synchronized long incrementAndGet() {
-        long currentValue = 0;
+    public synchronized int incrementAndGet() {
+        int currentValue = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = reader.readLine();
             if (line != null && !line.isEmpty()) {
-                currentValue = Long.parseLong(line.trim());
+                currentValue = Integer.parseInt(line.trim());
             }
         } catch (IOException | NumberFormatException e) {
             throw new RuntimeException("Failed to read number from file", e);
         }
 
-        long newValue = currentValue + 1;
+        int newValue = currentValue + 1;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(Long.toString(newValue));
@@ -73,13 +73,13 @@ public class IdGenerator {
         return newValue;
     }
 
-    public synchronized long get() {
+    public synchronized int get() {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = reader.readLine();
             if (line != null && !line.isEmpty()) {
-                return Long.parseLong(line.trim());
+                return Integer.parseInt(line.trim());
             }
-            return 0L;
+            return 0;
         } catch (IOException | NumberFormatException e) {
             throw new RuntimeException("Failed to read number from file", e);
         }
