@@ -24,7 +24,7 @@ public class IdGenerator {
             if (!file.exists()) {
                 file.createNewFile();
                 try (FileWriter writer = new FileWriter(file)) {
-                    writer.write("0");
+                    writer.write("100");
                 }
             }
         } catch (IOException e) {
